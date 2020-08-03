@@ -126,9 +126,8 @@ class InstagramBot:
                 res_number_dir = 'posts/video_number.txt'
 
             # Считываем с файла какой по счету скачиваемый ресурс
-            file = open(res_number_dir)
-            res_number = int(file.readline())
-            file.close()
+            with open(res_number_dir) as file:
+                res_number = int(file.readline())
 
             # Определяем директории, в зависимости от типа ресурса
             if post_type == 'img':
@@ -140,10 +139,9 @@ class InstagramBot:
             urllib.request.urlretrieve(res_url, res_output_dir)
 
             # Увеличиваем номер ресурса для следующего скачивания
-            file = open(res_number_dir, 'w')
-            res_number += 1
-            file.write(str(res_number))
-            file.close()
+            with open(res_number_dir, 'w') as file:
+                res_number += 1
+                file.write(str(res_number))
 
         try:
             # Переходим на посты по ссылкам, которые получаем как параметр urls и скачиваем ресурс поста
@@ -175,9 +173,8 @@ class InstagramBot:
     def reset_download_posts():
         # Функция для сброса числа в файле до 1
         def reset_values(path):
-            file = open(path, 'w')
-            file.write('1')
-            file.close()
+            with open(path, 'w') as file:
+                file.write('1')
 
         # Функция для удаления всех файлов в директории
         def delete_files(path):
